@@ -4,4 +4,4 @@ This project was based off of this [tutorial](https://www.raspberryweather.com/)
 
 The bme280 code will read the temperature, pressure, and humidity from the sensor and add it to a database. Make sure to run the code with Python 3 and not Python 2. The WordPress plugin allows these readings to be displayed as graphs on a website. The bash script can be ran with cron to automate the readings.
 
-I will add a link to the website after I've finished it and have collected more readings.
+Here is a link to the [website](http://alliebacholl.xyz).
