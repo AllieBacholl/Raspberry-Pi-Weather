@@ -93,7 +93,7 @@ function visualization_line_chart_shortcode($atts, $content = null)
 	if(strpos($options[day],"Week")!==false)  //current week
 		$whereConditions= "datemeasured between '".date("Y-m-d", strtotime("-1 week"))."' and '".date('Y-m-d')."'";
 	else if(strpos($options[day],"Month")!==false) //current month
-		$whereConditions= "MONTH(datemeasured)='".date('m')."'";
+		$whereConditions= "datemeasured between '".date("Y-m-d", strtotime("-31 days"))."' and '".date('Y-m-d')."'";
 	else //will use only today and yesterday
 	{
 		if(stripos($options[day],"Today")!==false)
