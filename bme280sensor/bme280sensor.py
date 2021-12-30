@@ -38,7 +38,7 @@ def saveToDatabase():
     with con:
         cur=con.cursor()
 
-        cur.execute("INSERT INTO temperatures (temperature, humidity, pressure, dateMeasured, hourMeasured) VALUES (%s,%s,%s,%s,%s)",(temperature,humidity,pressure,currentDate, minutes))
+        cur.execute("INSERT INTO temperatures (temperature, humidity, pressure, dateMeasured, hourMeasured) VALUES (%s,%s,%s,%s,%s)",(temperature,humidity,pressure,currentDate,minutes))
         con.commit();
 
     return "true"
