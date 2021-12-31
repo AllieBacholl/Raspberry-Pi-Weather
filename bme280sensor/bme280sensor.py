@@ -11,7 +11,7 @@ import busio
 from adafruit_bme280 import basic as adafruit_bme280
 
 databaseUsername="root" #YOUR MYSQL USERNAME, USUALLY ROOT
-databasePassword="Lizzy414" #YOUR MYSQL PASSWORD
+databasePassword="password" #YOUR MYSQL PASSWORD
 databaseName="WordpressDB" #do not change unless you named the Wordpress database with some other name
 
 # Create library object using our Bus I2C port
@@ -36,35 +36,32 @@ def saveToDatabase():
     temperature = format(bme280.temperature, ".1F")
 
     with con:
+        
+        #check if table is created or if we need to create one
+        try:
+            queryFile=open("createTable.sql","r")
+            
+            line=queryFile.readline()
+            query=""
+            while(line!=""):
+                query+=line
+                line=queryFile.readline()
+
+            curCreateTable=con.cursor()
+            curCreateTable.execute(query)
+
+            #now rename the file, because we do not need to recreate the table everytime this script is run
+            queryFile.close()
+            os.rename("createTable.sql","createTable.sql.bkp")
+
+        except IOError:
+            pass #table has already been created
+
         cur=con.cursor()
 
         cur.execute("INSERT INTO temperatures (temperature, humidity, pressure, dateMeasured, hourMeasured) VALUES (%s,%s,%s,%s,%s)",(temperature,humidity,pressure,currentDate,minutes))
         con.commit();
 
     return "true"
-
-#check if table is created or if we need to create one
-try:
-    queryFile=open("createTable.sql","r")
-
-    currentDate=datetime.datetime.now().date()
-
-    with con:
-        line=queryFile.readline()
-        query=""
-        while(line!=""):
-            query+=line
-            line=queryFile.readline()
-
-        cur=con.cursor()
-        cur.execute(query)
-
-        #now rename the file, because we do not need to recreate the table everytime this script is run
-        queryFile.close()
-        os.rename("createTable.sql","createTable.sql.bkp")
-        con.commit();
-
-except IOError:
-        pass #table has already been created
 
 saveToDatabase()
