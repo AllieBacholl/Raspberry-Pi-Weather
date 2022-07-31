@@ -1,3 +1,5 @@
+# Reads the data from the bme280 sensor and uploads it to a Wordpress database. 
+
 import os
 import glob
 import sys

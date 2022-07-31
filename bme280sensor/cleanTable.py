@@ -1,3 +1,5 @@
+# Deletes data that is two months old from temperatures and resets the auto increment id. 
+
 import time
 import MySQLdb as mdb
 import datetime
@@ -26,11 +28,13 @@ def selectOldData():
             if x[4] < oldDate:
                 oldData.append(x)
 
-        curDelete=con.cursor()
-
         for x in oldData:
             id = x[0]
-            curDelete.execute("DELETE FROM temperatures WHERE id = %s",(x[0],))
+            cur.execute("DELETE FROM temperatures WHERE id = %s",(x[0],))
+
+        cur.execute("SET @count=0")
+        cur.execute("UPDATE temperatures SET temperatures.id = @count := @count + 1")
+        cur.execute("ALTER TABLE temperatures AUTO_INCREMENT = 1")
 
         con.commit()
     return "true"
