@@ -9,5 +9,3 @@ This is what I have added to the crontab file of the raspberry pi to automatical
 */30 * * * * /home/pi/bme280sensor/readSensors.sh
 0 0 1 * * /home/pi/bme280sensor/clean.sh
 ```
-
-Here is a link to the [website](http://alliebacholl.xyz/).
